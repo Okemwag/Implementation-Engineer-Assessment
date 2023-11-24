@@ -65,26 +65,41 @@ schema = graphene.Schema(query=Query)
 
 ```
 
-# Managing a Data Streaming Application for One Million Notifications per Hour
+Managing a data streaming application that sends one million notifications every hour involves considerations for scalability, reliability, and efficient handling of asynchronous tasks. Here's a walkthrough with examples of technologies and configurations I would use:
 
-## Introduction
+### 1\. Data Streaming Platform: Apache Kafka
 
-In a data streaming application where the goal is to send one million notifications every hour, efficient load management and asynchronous processing are critical for scalability and performance. Let's walk through the key components and technologies that can be used to achieve this.
+- Technology: Apache Kafka
+- Configuration:
+  - Set up a Kafka cluster to handle high-throughput, fault-tolerant data streaming.
+  - Create Kafka topics for different notification types.
 
-## Architecture Overview
+### 2\. Message Queue for Asynchronous Processing: RabbitMQ
 
-### 1\. Message Broker
+- Technology: RabbitMQ
+- Configuration:
+  - Set up RabbitMQ for handling asynchronous tasks and decoupling notification sending from the main application.
+  - Use different queues for different notification types.
 
-Use a message broker to handle the distribution of notifications. A popular choice is Apache Kafka due to its high throughput and fault-tolerance capabilities.
+### 3\. Asynchronous Task Processing: Celery with Redis Backend
 
-### 2\. Asynchronous Task Queue
+- Technology: Celery, Redis
+- Configuration:
+  - Integrate Celery for handling asynchronous tasks.
+  - Use Redis as a backend for Celery to store task results and manage distributed task queues.
+  - Configure Celery workers to process tasks concurrently.
 
-Implement an asynchronous task queue to handle the processing of notifications. Celery is a robust choice, allowing for distributed task execution.
+### 4\. Database: PostgreSQL for Persistence
 
-### 3\. Database
+- Technology: PostgreSQL
+- Configuration:
+  - Store notification data and relevant information in a PostgreSQL database for persistence.
+  - Optimize database schema and indexes for efficient retrieval.
 
-Use a scalable and high-performance database to store and retrieve notification data. Redis or MongoDB can be suitable for this purpose.
+### 5\. Load Balancing and Auto-Scaling: NGINX, Docker, Kubernetes
 
-### 4\. Load Balancer
-
-Employ a load balancer to evenly distribute incoming requests across multiple application instances. NGINX or HAProxy are common choices
+- Technology: NGINX, Docker, Kubernetes
+- Configuration:
+  - Use NGINX as a reverse proxy to distribute incoming requests to multiple Flask instances.
+  - Containerize the application using Docker for easy deployment and scaling.
+  - Deploy on Kubernetes for automatic scaling and load balancing.
