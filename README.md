@@ -106,8 +106,9 @@ Managing a data streaming application that sends one million notifications every
   - Containerize the application using Docker for easy deployment and scaling.
   - Deploy on Kubernetes for automatic scaling and load balancing.
 
-3. ENCRYPTION AND HASHING METHODS
-   One-way hashes are suitable for storing sensitive information, like passwords, where you don't need to retrieve the original data.
+# 3. ENCRYPTION AND HASHING METHODS
+
+One-way hashes are suitable for storing sensitive information, like passwords, where you don't need to retrieve the original data.
 
 ```python
 
