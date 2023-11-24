@@ -105,3 +105,52 @@ Managing a data streaming application that sends one million notifications every
   - Use NGINX as a reverse proxy to distribute incoming requests to multiple Flask instances.
   - Containerize the application using Docker for easy deployment and scaling.
   - Deploy on Kubernetes for automatic scaling and load balancing.
+
+3. ENCRYPTION AND HASHING METHODS
+   One-way hashes are suitable for storing sensitive information, like passwords, where you don't need to retrieve the original data.
+
+```python
+
+import hashlib
+
+def hash_password(password):
+    salt = b'somesalt'
+    password = password.encode('utf-8')
+    hashed_password = hashlib.sha256(salt + password).hexdigest()
+    return hashed_password
+
+# Example usage
+password = "securepassword"
+hashed_password = hash_password(password)
+print(f"Password: {password}")
+print(f"Hashed Password: {hashed_password}")
+
+```
+
+Two-way encryption is suitable when you need to encrypt and later decrypt data, such as storing sensitive data like credit card numbers or encrypting communication channels.
+
+```python
+import bcrypt
+
+def encrypt_data(data, secret_key):
+    salt = bcrypt.gensalt()
+    encrypted_data = bcrypt.hashpw(data.encode('utf-8'), salt)
+    return encrypted_data
+
+def decrypt_data(encrypted_data, secret_key):
+    return bcrypt.checkpw(secret_key.encode('utf-8'), encrypted_data)
+
+# Example usage
+data = "sensitivedata"
+secret_key = "secretkey"
+
+# Encryption
+encrypted_data = encrypt_data(data, secret_key)
+print(f"Data: {data}")
+print(f"Encrypted Data: {encrypted_data}")
+
+# Decryption
+is_valid = decrypt_data(encrypted_data, secret_key)
+print(f"Is Valid: {is_valid}")
+
+```
