@@ -64,3 +64,27 @@ schema = graphene.Schema(query=Query)
 
 
 ```
+
+# Managing a Data Streaming Application for One Million Notifications per Hour
+
+## Introduction
+
+In a data streaming application where the goal is to send one million notifications every hour, efficient load management and asynchronous processing are critical for scalability and performance. Let's walk through the key components and technologies that can be used to achieve this.
+
+## Architecture Overview
+
+### 1\. Message Broker
+
+Use a message broker to handle the distribution of notifications. A popular choice is Apache Kafka due to its high throughput and fault-tolerance capabilities.
+
+### 2\. Asynchronous Task Queue
+
+Implement an asynchronous task queue to handle the processing of notifications. Celery is a robust choice, allowing for distributed task execution.
+
+### 3\. Database
+
+Use a scalable and high-performance database to store and retrieve notification data. Redis or MongoDB can be suitable for this purpose.
+
+### 4\. Load Balancer
+
+Employ a load balancer to evenly distribute incoming requests across multiple application instances. NGINX or HAProxy are common choices
