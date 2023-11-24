@@ -65,6 +65,8 @@ schema = graphene.Schema(query=Query)
 
 ```
 
+# DATA STREAMING APPLICATION
+
 Managing a data streaming application that sends one million notifications every hour involves considerations for scalability, reliability, and efficient handling of asynchronous tasks. Here's a walkthrough with examples of technologies and configurations I would use:
 
 ### 1\. Data Streaming Platform: Apache Kafka
