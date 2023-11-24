@@ -1,6 +1,6 @@
 # INTEGRATION PROTOCOLS
 
-## a.HTTP/HTTPS -
+## a.HTTP/HTTPS
 
 They are based on a client-server model, and requests and responses are exchanged using the HTTP methods
 
@@ -22,7 +22,7 @@ else:
 
 ```
 
-## b. Websockets: -
+## b. Websockets
 
 enables real-time communication between clients and servers.
 
@@ -45,6 +45,22 @@ async def send_message():
 asyncio.get_event_loop().run_until_complete(send_message())
 ```
 
-## c. GraphQL -
+## c. GraphQL
 
 is a query language and runtime for APIs that enables clients to request only the data they need
+
+An example of GraphQl usage in python
+
+```python
+import graphene
+
+class Query(graphene.ObjectType):
+    hello = graphene.String(description="A simple greeting")
+
+    def resolve_hello(self, info):
+        return "Hello, GraphQL!"
+
+schema = graphene.Schema(query=Query)
+
+
+```
