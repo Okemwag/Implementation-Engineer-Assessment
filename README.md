@@ -1,4 +1,4 @@
-# 1.INTEGRATION PROTOCOLS
+# 1. INTEGRATION PROTOCOLS
 
 ## a.HTTP/HTTPS
 
@@ -65,7 +65,7 @@ schema = graphene.Schema(query=Query)
 
 ```
 
-# DATA STREAMING APPLICATION
+# 2. DATA STREAMING APPLICATION
 
 Managing a data streaming application that sends one million notifications every hour involves considerations for scalability, reliability, and efficient handling of asynchronous tasks. Here's a walkthrough with examples of technologies and configurations I would use:
 
