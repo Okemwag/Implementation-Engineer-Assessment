@@ -164,38 +164,13 @@ Welcome to the comprehensive guide on deploying a Movie Django application with 
 Django Project Setup: `django_project`
 ======================================
 
-## Project Structure
-
-The Django project is named `django_project`, and it contains an app named `search`.
-
-plaintextCopy code
-
-`django_project/
-│
-├── manage.py
-├── django_project/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   └── asgi.py
-└── search/
-    ├── __init__.py
-    ├── admin.py
-    ├── migrations/
-    │   └── __init__.py
-    ├── models.py
-    ├── tests.py
-    ├── views.py
-    └── urls.py`
-
 ## PostgreSQL Configuration in `settings.py`
 
 In the `django_project/settings.py` file, the PostgreSQL database configuration is as follows:
 
-pythonCopy code
+`# django_project/settings.py``
 
-`# django_project/settings.py
-
+```sql
 DATABASES = {
 "default": {
 "ENGINE": "django.db.backends.postgresql",
@@ -205,7 +180,8 @@ DATABASES = {
 "HOST": "db",
 "PORT": 5432,
 }
-}`
+}
+```
 
 This configuration specifies the use of the PostgreSQL database with the following parameters:
 
