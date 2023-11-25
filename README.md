@@ -347,7 +347,3 @@ This Nginx configuration:
 
 - Run `docker-compose up --build` in the project root.
 - Visit `http://localhost:80` in your browser.
-
-```
-
-```
