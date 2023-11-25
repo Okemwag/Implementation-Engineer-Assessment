@@ -155,3 +155,64 @@ is_valid = decrypt_data(encrypted_data, secret_key)
 print(f"Is Valid: {is_valid}")
 
 ```
+
+# Django Search and Results Page Deployment Guide
+
+## Introduction
+
+Welcome to the comprehensive guide on deploying a Movie Django application with a PostgreSQL database, incorporating a search and results page. This walkthrough will cover setting up Django, configuring the PostgreSQL database, deploying the application on a nginx web server, and containerizing it with an Alpine Docker image.
+Django Project Setup: `django_project`
+======================================
+
+## Project Structure
+
+The Django project is named `django_project`, and it contains an app named `search`.
+
+plaintextCopy code
+
+`django_project/
+│
+├── manage.py
+├── django_project/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── asgi.py
+└── search/
+    ├── __init__.py
+    ├── admin.py
+    ├── migrations/
+    │   └── __init__.py
+    ├── models.py
+    ├── tests.py
+    ├── views.py
+    └── urls.py`
+
+## PostgreSQL Configuration in `settings.py`
+
+In the `django_project/settings.py` file, the PostgreSQL database configuration is as follows:
+
+pythonCopy code
+
+`# django_project/settings.py
+
+DATABASES = {
+"default": {
+"ENGINE": "django.db.backends.postgresql",
+"NAME": "postgres",
+"USER": "postgres",
+"PASSWORD": "postgres",
+"HOST": "db",
+"PORT": 5432,
+}
+}`
+
+This configuration specifies the use of the PostgreSQL database with the following parameters:
+
+- Database Name: `postgres`
+- User: `postgres`
+- Password: `postgres`
+- Host: `db`
+- Port: `5432`
+
+These settings define the connection details for the default database used by the Django project.
