@@ -1,11 +1,15 @@
 from django.db import models
 
-# Create your models here.
 
-class Search(models.Model):
-    item = models.CharField(max_length=200)
-    details = models.TextField()
-    
-    
+class Movie(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=500)
+    year = models.IntegerField()
+    image = models.ImageField(upload_to='movie/images/')
+    url = models.URLField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return self.item
+        return self.title
+
+
