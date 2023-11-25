@@ -160,9 +160,9 @@ print(f"Is Valid: {is_valid}")
 
 ## Introduction
 
-Welcome to the comprehensive guide on deploying a Movie Django application with a PostgreSQL database, incorporating a search and results page. This walkthrough will cover setting up Django, configuring the PostgreSQL database, deploying the application on a nginx web server, and containerizing it with an Alpine Docker image.
-Django Project Setup: `django_project`
-======================================
+### Welcome to the comprehensive guide on deploying a Movie Django application with a PostgreSQL database, incorporating a search and results page. This walkthrough will cover setting up Django, configuring the PostgreSQL database, deploying the application on a nginx web server, and containerizing it with an Alpine Docker image.
+
+# Django Project Setup: `django_project`
 
 ## PostgreSQL Configuration in `settings.py`
 
