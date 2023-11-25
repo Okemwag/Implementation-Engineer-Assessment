@@ -168,7 +168,7 @@ print(f"Is Valid: {is_valid}")
 
 In the `django_project/settings.py` file, the PostgreSQL database configuration is as follows:
 
-`# django_project/settings.py``
+`# django_project/settings.py`
 
 ```sql
 DATABASES = {
