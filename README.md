@@ -240,30 +240,41 @@ In this Dockerfile:
 
 ## docker-compose.yml
 
-`version: "3.9"
+# docker-compose.yml
+
+```yaml
+version: "3.9"
 
 services:
-web:
-build:
-context: .
-volumes: - .:/code
-ports: - 8000:8000
-depends_on: - db
+  web:
+    build:
+      context: .
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
 
-db:
-image: postgres:14
-volumes: - ./postgres_data:/var/lib/postgresql/data/
-environment: - "POSTGRES_HOST_AUTH_METHOD=trust"
+  db:
+    image: postgres:14
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
 
-nginx:
-build:
-context: ./nginx
-dockerfile: Dockerfile
-ports: - 80:80
-depends_on: - web
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - web
 
 volumes:
-postgres_data:`
+  postgres_data:
+```
 
 This docker-compose.yml file:
 
@@ -276,18 +287,19 @@ This docker-compose.yml file:
 
 ## nginx.conf
 
-`worker_processes 1;
+```nginx
+worker_processes 1;
 
 events {
-worker_connections 1024;
+    worker_connections 1024;
 }
 
 http {
-sendfile on;
-tcp_nopush on;
-tcp_nodelay on;
-keepalive_timeout 65;
-types_hash_max_size 2048;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
 
     include /etc/nginx/mime.types;
     default_type application/octet-stream;
@@ -297,11 +309,11 @@ types_hash_max_size 2048;
         server_name web;
 
         location / {
-            proxy_pass http://web:8000;
+            proxy_pass http://0.0.0.0:8000;
         }
     }
-
-}`
+}
+```
 
 This Nginx configuration:
 
