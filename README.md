@@ -192,3 +192,147 @@ This configuration specifies the use of the PostgreSQL database with the followi
 - Port: `5432`
 
 These settings define the connection details for the default database used by the Django project.
+
+# Dockerizing the Django Project
+
+## Dockerfile
+
+`# Pull base image
+FROM python:3.11-alpine
+
+# Set environment variables
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV PORT 8000
+
+# Create and set work directory called `code`
+
+WORKDIR /code
+
+# Install dependencies
+
+COPY requirements.txt .
+
+RUN set -ex &&\
+ pip install --upgrade pip &&\
+ pip install -r /code/requirements.txt
+
+# Copy local project
+
+COPY . .
+
+# Expose port 8000
+
+EXPOSE $PORT
+
+# Use Django's development server on port 8000
+
+CMD python manage.py runserver 0.0.0.0:$PORT`
+
+In this Dockerfile:
+
+- It uses the `python:3.11-alpine` base image.
+- Sets environment variables and creates a working directory.
+- Installs project dependencies from `requirements.txt`.
+- Exposes port 8000.
+- Copies the local project into the container.
+- Specifies the command to run Django's development server.
+
+## docker-compose.yml
+
+`version: "3.9"
+
+services:
+web:
+build:
+context: .
+volumes: - .:/code
+ports: - 8000:8000
+depends_on: - db
+
+db:
+image: postgres:14
+volumes: - ./postgres_data:/var/lib/postgresql/data/
+environment: - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+nginx:
+build:
+context: ./nginx
+dockerfile: Dockerfile
+ports: - 80:80
+depends_on: - web
+
+volumes:
+postgres_data:`
+
+This docker-compose.yml file:
+
+- Defines three services: `web` (Django), `db` (PostgreSQL), and `nginx` (Nginx).
+- Links services and defines dependencies.
+- Maps ports for Django (8000), PostgreSQL, and Nginx (80).
+- Uses a volume for persistent PostgreSQL data.
+
+# 2\. Configuring Nginx
+
+## nginx.conf
+
+`worker_processes 1;
+
+events {
+worker_connections 1024;
+}
+
+http {
+sendfile on;
+tcp_nopush on;
+tcp_nodelay on;
+keepalive_timeout 65;
+types_hash_max_size 2048;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    server {
+        listen 80;
+        server_name web;
+
+        location / {
+            proxy_pass http://web:8000;
+        }
+    }
+
+}`
+
+This Nginx configuration:
+
+- Uses one worker process.
+- Defines basic event settings.
+- Configures an HTTP server.
+- Listens on port 80 for the `web` server.
+- Forwards requests to the Django application using the `proxy_pass` directive.
+
+# 3\. Walk-through Explanations
+
+1.  Dockerizing Django:
+
+    - The Dockerfile uses the lightweight Python Alpine image.
+    - Sets necessary environment variables and creates a working directory.
+    - Installs project dependencies.
+    - Exposes port 8000 and specifies the command to run the Django development server.
+
+2.  docker-compose.yml:
+
+    - Defines services for Django (`web`), PostgreSQL (`db`), and Nginx (`nginx`).
+    - Establishes dependencies between services.
+    - Maps ports and uses volumes for persistent data.
+
+3.  Configuring Nginx:
+
+    - Nginx acts as a reverse proxy, forwarding requests to the Django application.
+    - The `proxy_pass` directive directs requests to the `web` service on port 8000.
+
+# 4\. Running the Application
+
+- Run `docker-compose up --build` in the project root.
+- Visit `http://localhost:80` in your browser.
